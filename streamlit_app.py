@@ -1,40 +1,38 @@
 import streamlit as st
 
-def display_photo_with_quote(photo_path, quote):
-    col = st.columns([1, 3])
-    col[0].image(photo_path, use_column_width=True)
-    col[1].write(quote)
-
-def main():
-    st.title("🎉 Happy 37th Birthday!")
-
-    # Display 14 pictures with quotes
-    st.header("📸 Photobook")
-
-    photos_with_quotes = {
-        "photo1.jpg": "Wishing you a day filled with love, laughter, and all your favorite things!",
-        "photo2.jpg": "May your birthday be as special and wonderful as you are.",
-        "photo3.jpg": "Here's to another year of amazing adventures and unforgettable memories!",
-        "photo4.jpg": "Cheers to another year of growth, happiness, and success. Happy Birthday!",
-        "photo5.jpg": "On your special day, may all your dreams and wishes come true.",
-        "photo6.jpg": "Sending you endless love and warm wishes on your birthday. You deserve the best!",
-        "photo7.jpg": "Celebrating you today and every day. Happy 37th Birthday!",
-        "photo8.jpg": "You're not just getting older, you're getting wiser and more fabulous. Happy Birthday!",
-        "photo9.jpg": "Another year older, another year bolder. Keep shining bright!",
-        "photo10.jpg": "Here's to celebrating the amazing person you are. Happy Birthday!",
-        "photo11.jpg": "Age is just a number, but your spirit is timeless. Keep being awesome!",
-        "photo12.jpg": "Life is a journey, and today, we celebrate the incredible journey you've had so far.",
-        "photo13.jpg": "You make the world a better place just by being in it. Happy Birthday!",
-        "photo14.jpg": "Today, we celebrate the gift of you. Wishing you a fantastic year ahead!",
+def display_photobook():
+    # Displaying the provided birthday card image as the first photo
+    st.image("https://img.freepik.com/premium-vector/cute-happy-birthday-card-template_129604-1351.jpg", use_column_width=True)
+    
+    # Dictionary of birthday quotes
+    birthday_quotes = {
+        "photo2.jpg": "Age is merely the number of years the world has been enjoying you. Happy birthday!",
+        "photo3.jpg": "Wishing you a day filled with love, laughter, and unforgettable memories. Happy birthday!",
+        "photo4.jpg": "On your special day, may all your dreams and wishes come true. Happy birthday!",
+        "photo5.jpg": "Cheers to another year of adventures, laughter, and love. Happy birthday!",
+        "photo6.jpg": "May your birthday be as amazing as you are! Wishing you all the happiness in the world.",
+        "photo7.jpg": "You're not getting older, you're getting wiser. Happy birthday!",
+        "photo8.jpg": "Another year older, another year bolder. Happy birthday!",
+        "photo9.jpg": "Age is just a number, but life is the real celebration. Happy birthday!",
+        "photo10.jpg": "Here's to growing older and still rocking it! Happy birthday!",
+        "photo11.jpg": "Every year with you is better than the last. Happy birthday, my love!",
+        "photo12.jpg": "Happy birthday to the one who fills my life with joy and love.",
+        "photo13.jpg": "You're not just a year older, you're a year more awesome. Happy birthday!",
+        "photo14.jpg": "May your birthday be the start of a year filled with good luck, good health, and much happiness."
     }
 
-    for photo, quote in photos_with_quotes.items():
-        display_photo_with_quote(photo, quote)
-        st.write("---")
+    # Displaying each photo with its corresponding birthday quote
+    for photo, quote in birthday_quotes.items():
+        st.image(photo, use_column_width=True)
+        st.write(f"\"{quote}\"")
 
-    # Happy Birthday Greeting
-    st.header("🎂 Happy Birthday!")
-    st.write("Wishing you a day filled with love, laughter, and unforgettable moments. Here's to another year of joy, growth, and endless possibilities. Happy 37th Birthday!")
+    # Personalized happy birthday greeting
+    st.header("🎂 Happy 37th Birthday!")
+    st.write("Wishing you a fantastic birthday filled with love, laughter, and cherished moments. May this year be your best one yet!")
 
-if __name__ == "__main__":
-    main()
+# Title and Introduction
+st.title("📸 Birthday Photobook 🎉")
+st.write("Explore the pages of this photobook to celebrate your special day!")
+
+# Display the photobook
+display_photobook()
