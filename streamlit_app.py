@@ -1,31 +1,32 @@
-import streamlit as st
+from pywebio.input import input, TEXT
+from pywebio.output import put_html
+import requests
+from bs4 import BeautifulSoup
+import random
+import time
 
-def display_photobook():
-    # Displaying the provided birthday card image as the first photo
-    st.image("https://img.freepik.com/premium-vector/cute-happy-birthday-card-template_129604-1351.jpg", use_column_width=True)
-    
-    # Dictionary of photos and birthday quotes
-    photo_quotes = {
-        "photo2.jpg": "Age is merely the number of years the world has been enjoying you. Happy birthday!",
-        "photo3.jpg": "Wishing you a day filled with love, laughter, and unforgettable memories. Happy birthday!",
-        "photo4.jpg": "On your special day, may all your dreams and wishes come true. Happy birthday!",
-    }
+def fetch_gifs(keyword):
+    url = f"https://www.google.com/search?q={keyword}&tbm=isch"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    images = soup.find_all('img')
+    return [image['src'] for image in images]
 
-    # Displaying photos with corresponding birthday quotes
-    for photo, quote in photo_quotes.items():
-        if st.button(f"Click to reveal: {quote}"):
-            st.image(photo, use_column_width=True)
+def display_slideshow(gifs):
+    html_code = ""
+    for gif in gifs:
+        html_code += f'<img src="{gif}" width="300" height="300">'
+    put_html(html_code)
 
-    # Displaying the GIF as the third object
-    st.image("https://64.media.tumblr.com/6f8c976e4b9ca4fb6ef602a209d5dc1d/75977a3f5d4ae7cd-d4/s1280x1920/edba661c8a5866ea61279b58d6dcc9c609b22b9b.gif", use_column_width=True)
+def main():
+    keyword = input("Enter the keyword to search for GIFs:", type=TEXT, placeholder="e.g., cute birthday gif").strip()
+    gifs = fetch_gifs(keyword)
+    if len(gifs) >= 3:
+        display_slideshow(random.sample(gifs, 3))
+    else:
+        put_html("<p>No GIFs found. Please try again with different keywords.</p>")
 
-    # Personalized happy birthday greeting
-    st.header("🎂 Happy 37th Birthday!")
-    st.write("Wishing you a fantastic birthday filled with love, laughter, and cherished moments. May this year be your best one yet!")
-
-# Title and Introduction
-st.title("📸 Birthday Photobook 🎉")
-st.write("Explore the pages of this photobook to celebrate your special day!")
-
-# Display the photobook
-display_photobook()
+if __name__ == "__main__":
+    main()
