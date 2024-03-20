@@ -1,9 +1,7 @@
-from pywebio.input import input, TEXT
-from pywebio.output import put_html
+import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import random
-import time
 
 def fetch_gifs(keyword):
     url = f"https://www.google.com/search?q={keyword}&tbm=isch"
@@ -14,19 +12,18 @@ def fetch_gifs(keyword):
     images = soup.find_all('img')
     return [image['src'] for image in images]
 
-def display_slideshow(gifs):
-    html_code = ""
-    for gif in gifs:
-        html_code += f'<img src="{gif}" width="300" height="300">'
-    put_html(html_code)
-
 def main():
-    keyword = input("Enter the keyword to search for GIFs:", type=TEXT, placeholder="e.g., cute birthday gif").strip()
-    gifs = fetch_gifs(keyword)
-    if len(gifs) >= 3:
-        display_slideshow(random.sample(gifs, 3))
-    else:
-        put_html("<p>No GIFs found. Please try again with different keywords.</p>")
+    st.title("📸 Birthday GIF Slideshow 🎉")
+    st.write("Enter a keyword to search for birthday GIFs:")
+    keyword = st.text_input("Keyword", "cute birthday gif")
+    if st.button("Generate Slideshow"):
+        gifs = fetch_gifs(keyword)
+        if len(gifs) >= 3:
+            st.write("Here are your birthday GIFs:")
+            for gif in random.sample(gifs, 3):
+                st.image(gif, use_column_width=True)
+        else:
+            st.write("No GIFs found. Please try again with different keywords.")
 
 if __name__ == "__main__":
     main()
